@@ -37,7 +37,7 @@ function ListView(
 
   return (
     <>
-      <Link to={"/"}>New</Link>
+      <Link to={"new"}>New</Link>
 
       <div>
         {rideList.length == 0 ? (
@@ -57,8 +57,8 @@ function ListView(
                   <p>{ride.hasLuggage}</p>
                   <p>{ride.notes}</p>
                   <p>{ride.jobStatus}</p>
-                  <Link to={"/"}>Edit</Link>
-                  <Link to={"/"}>Delete</Link>
+                  <Link to={`${ride.id}/edit`}>Edit</Link>
+                  <Link to={`${ride.id}/delete`}>Delete</Link>
                 </li>
               );
             })}
