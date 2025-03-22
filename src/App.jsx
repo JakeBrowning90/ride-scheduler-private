@@ -8,7 +8,7 @@ import ErrorScreen from "./components/ErrorScreen";
 function App() {
   return (
     <>
-      <main>
+      <main className="container bg-primary-subtle">
         <Routes>
           {/* List view */}
           <Route path="/" element={<ListView />} />

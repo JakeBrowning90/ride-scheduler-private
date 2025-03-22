@@ -31,25 +31,29 @@ function ListView(
       .finally(() => setLoading(false));
   }, []);
 
+  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+
   // Render
   if (loading) return <p>Loading Ride List...</p>;
   if (error) return <p>Network error, please try again later.</p>;
 
   return (
     <>
-      <Link to={"new"}>New</Link>
+      <Link to={"new"}>
+        <button className="btn btn-primary sticky-top">New</button>
+      </Link>
 
       <div>
         {rideList.length == 0 ? (
           <p>No rides scheduled</p>
         ) : (
-          <ul>
+          <ul className="list-group">
             {rideList.map((ride) => {
               return (
-                <li key={ride.id}>
+                <li key={ride.id}  className="list-group-item bg-light ">
                   <p>{ride.clientName}</p>
                   <p>{ride.clientPhone}</p>
-                  <p>Pick up at {ride.pickUpTime}</p>
+                  <p>Pick up at {days[new Date(ride.pickUpTime).getDay()]} {new Date(ride.pickUpTime).toLocaleString("en-US")}</p>
                   <p>
                     {ride.pickUpLocation} to {ride.dropOffLocation}
                   </p>
