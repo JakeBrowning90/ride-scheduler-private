@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { apiSource } from "../apiSource";
 import { Link } from "react-router";
+import person from "../assets/person.svg";
 
 function ListView(
   {
@@ -31,7 +32,7 @@ function ListView(
       .finally(() => setLoading(false));
   }, []);
 
-  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   // Render
   if (loading) return <p>Loading Ride List...</p>;
@@ -50,19 +51,34 @@ function ListView(
           <ul className="list-group">
             {rideList.map((ride) => {
               return (
-                <li key={ride.id}  className="list-group-item bg-light ">
-                  <p>{ride.clientName}</p>
+                <li
+                  key={ride.id}
+                  className="list-group-item bg-light rideListItem"
+                >
+                  <div className="rideListItem-row">
+                    <p>{ride.jobStatus}</p>
+                    <p>
+                      {days[new Date(ride.pickUpTime).getDay()]}{" "}
+                      {new Date(ride.pickUpTime).toLocaleString("en-US")}
+                    </p>
+                  </div>
+                  <div className="rideListItem-row">
+                    <p>{ride.clientName}</p>
+                    <p>
+                      <img src={person} alt="" />
+                      {ride.passengerCt}
+                    </p>
+                  </div>
+
                   <p>{ride.clientPhone}</p>
-                  <p>Pick up at {days[new Date(ride.pickUpTime).getDay()]} {new Date(ride.pickUpTime).toLocaleString("en-US")}</p>
-                  <p>
-                    {ride.pickUpLocation} to {ride.dropOffLocation}
-                  </p>
-                  <p>Passengers: {ride.passengerCt}</p>
-                  <p>{ride.hasLuggage}</p>
-                  <p>{ride.notes}</p>
-                  <p>{ride.jobStatus}</p>
-                  <Link to={`${ride.id}/edit`}>Edit</Link>
-                  <Link to={`${ride.id}/delete`}>Delete</Link>
+                  <p>{ride.pickUpLocation}</p>
+                  <p>{ride.dropOffLocation}</p>
+                  {ride.hasLuggage && <p>Extra Luggage</p>}
+                  {ride.notes && <p>{ride.notes}</p>}
+                  <div className="rideListItem-row">
+                    <Link to={`${ride.id}/edit`}>Edit</Link>
+                    <Link to={`${ride.id}/delete`}>Delete</Link>
+                  </div>
                 </li>
               );
             })}
